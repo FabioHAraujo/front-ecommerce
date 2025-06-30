@@ -5,6 +5,7 @@ import "./globals.css"
 import { Header } from "@/components/header"
 import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "@/components/ui/sonner"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -20,6 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="pt-BR">
+      <SpeedInsights />
       <body className={inter.className}>
         <CartProvider>
           <Header />
