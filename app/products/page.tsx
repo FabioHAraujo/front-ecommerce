@@ -9,7 +9,6 @@ import { Badge } from "@/components/ui/badge"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Search, Filter, X, Grid3X3, List } from "lucide-react"
-import { Separator } from "@/components/ui/separator"
 
 type SortOption = "name-asc" | "name-desc" | "price-asc" | "price-desc" | "rating-desc"
 type ViewMode = "grid" | "list"
@@ -29,7 +28,7 @@ export default function ProductsPage() {
 
   // Filtrar e ordenar produtos
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = products.filter(product => {
+    const filtered = products.filter(product => {
       const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
                            product.category.toLowerCase().includes(searchTerm.toLowerCase())
       const matchesCategory = selectedCategory === "all" || product.category === selectedCategory
@@ -175,7 +174,7 @@ export default function ProductsPage() {
               <span className="text-sm font-medium">Filtros ativos:</span>
               {searchTerm && (
                 <Badge variant="secondary" className="gap-1">
-                  Busca: "{searchTerm}"
+                  Busca: &ldquo;{searchTerm}&rdquo;
                   <X 
                     className="h-3 w-3 cursor-pointer" 
                     onClick={() => setSearchTerm("")}

@@ -1,33 +1,52 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { notFound } from "next/navigation"
 import { Star, ShoppingCart, Heart, Minus, Plus } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { getProductById } from "@/lib/products"
+import { getProductById, type Product } from "@/lib/products"
 import { useCart } from "@/contexts/cart-context"
 import { toast } from "sonner"
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     id: string
-  }
+  }>
 }
 
 export default function ProductPage({ params }: ProductPageProps) {
   const [quantity, setQuantity] = useState(1)
-  const product = getProductById(params.id)
+  const [product, setProduct] = useState<Product | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
   const { dispatch } = useCart()
 
-  if (!product) {
-    notFound()
-  }
+  useEffect(() => {
+    const loadProduct = async () => {
+      try {
+        const resolvedParams = await params
+        const foundProduct = getProductById(resolvedParams.id)
+
+        if (!foundProduct) {
+          notFound()
+        }
+
+        setProduct(foundProduct)
+      } catch (error) {
+        console.error("Error loading product:", error)
+        notFound()
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadProduct()
+  }, [params])
 
   const handleAddToCart = () => {
-    if (!product.inStock) return
+    if (!product || !product.inStock) return
 
     for (let i = 0; i < quantity; i++) {
       dispatch({ type: "ADD_ITEM", payload: product })
@@ -39,12 +58,37 @@ export default function ProductPage({ params }: ProductPageProps) {
   const incrementQuantity = () => setQuantity((prev) => prev + 1)
   const decrementQuantity = () => setQuantity((prev) => Math.max(1, prev - 1))
 
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+          <div className="aspect-square bg-muted animate-pulse rounded-lg" />
+          <div className="space-y-6">
+            <div className="h-8 bg-muted animate-pulse rounded" />
+            <div className="h-4 bg-muted animate-pulse rounded w-3/4" />
+            <div className="h-12 bg-muted animate-pulse rounded" />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  if (!product) {
+    notFound()
+  }
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Product Image */}
         <div className="aspect-square relative overflow-hidden rounded-lg">
-          <Image src={product.image || "/placeholder.svg"} alt={product.name} fill className="object-cover" priority />
+          <Image
+            src={product.image || "/placeholder.svg"}
+            alt={product.name}
+            fill
+            className="object-cover"
+            priority
+          />
         </div>
 
         {/* Product Info */}
