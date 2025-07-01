@@ -6,6 +6,7 @@ import { Header } from "@/components/header"
 import { CartProvider } from "@/contexts/cart-context"
 import { Toaster } from "@/components/ui/sonner"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { AvisoIA } from "@/components/aviso-ia"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -24,6 +25,7 @@ export default function RootLayout({
       <SpeedInsights />
       <body className={inter.className}>
         <CartProvider>
+          <AvisoIA />
           <Header />
           <main className="min-h-screen">{children}</main>
           <Toaster />
