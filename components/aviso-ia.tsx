@@ -42,7 +42,7 @@ export function AvisoIA() {
                   variant="outline"
                   size="sm"
                   onClick={handleAcknowledge}
-                  className="self-end" // Alinha o botão à direita
+                  className="self-end cursor-pointer" // Alinha o botão à direita
                 >
                   OK, entendi
                 </Button>
