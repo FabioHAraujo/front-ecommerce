@@ -3,6 +3,47 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@layer utilities {
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animated-border-card {
+    position: relative;
+    z-index: 0;
+    overflow: hidden;
+    padding: 2px; /* Espessura da borda animada */
+  }
+
+  .animated-border-card::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-color: #1a202c;
+    background-repeat: no-repeat;
+    background-size: 50% 50%, 50% 50%;
+    background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+    /* Gradiente cônico para a "luz" que gira */
+    background-image: conic-gradient(
+      from 180deg at 50% 50%,
+      #845ec2,
+      #d65db1,
+      #ff6f91,
+      #ff9671,
+      #ffc75f,
+      #f9f871,
+      #845ec2
+    );
+    animation: spin 5s linear infinite;
+  }
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
