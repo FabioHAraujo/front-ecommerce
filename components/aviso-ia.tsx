@@ -22,7 +22,7 @@ export function AvisoIA() {
   if (!visible) return null
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 bg-background border-b border-muted shadow-md">
+    <div className="fixed bottom-0 left-0 w-full z-50 bg-background border-b border-muted shadow-md">
       <Card className="rounded-none border-none">
         <CardContent className="py-4 px-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground text-center sm:text-left">
