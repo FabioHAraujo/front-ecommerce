@@ -130,13 +130,13 @@ export function Header() {
           )}
 
           {/* Botão de usuário */}
-          <Button variant="ghost" size="icon" className="hidden md:flex">
+          <Button variant="ghost" size="icon" className="hidden md:flex cursor-pointer">
             <User className="h-5 w-5" />
           </Button>
 
           {/* Carrinho */}
           <Link href="/cart">
-            <Button variant="ghost" size="icon" className="relative">
+            <Button variant="ghost" size="icon" className="relative cursor-pointer">
               <ShoppingCart className="h-5 w-5" />
               {state.itemCount > 0 && (
                 <Badge

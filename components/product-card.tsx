@@ -71,7 +71,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </CardContent>
 
       <CardFooter className="p-4 pt-0">
-        <Button onClick={handleAddToCart} disabled={!product.inStock} className="w-full">
+        <Button onClick={handleAddToCart} disabled={!product.inStock} className="w-full cursor-pointer">
           <ShoppingCart className="mr-2 h-4 w-4" />
           {product.inStock ? "Adicionar ao Carrinho" : "Indisponível"}
         </Button>
